@@ -1,0 +1,1982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            crossorigin=""></script>
+    <style>
+        .button-4 {
+            appearance: none;
+            background-color: #FAFBFC;
+            border: 1px solid rgba(27, 31, 35, 0.15);
+            border-radius: 6px;
+            box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+            box-sizing: border-box;
+            color: #24292E;
+            cursor: pointer;
+            display: inline-block;
+            font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 20px;
+            list-style: none;
+            padding: 6px 16px;
+            position: relative;
+            transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            vertical-align: middle;
+            white-space: nowrap;
+            word-wrap: break-word;
+        }
+
+        .button-4:hover {
+            background-color: #F3F4F6;
+            text-decoration: none;
+            transition-duration: 0.1s;
+        }
+
+        .button-4:disabled {
+            background-color: #FAFBFC;
+            border-color: rgba(27, 31, 35, 0.15);
+            color: #959DA5;
+            cursor: default;
+        }
+
+        .button-4:active {
+            background-color: #EDEFF2;
+            box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+            transition: none 0s;
+        }
+
+        .button-4:focus {
+            outline: 1px transparent;
+        }
+
+        .button-4:before {
+            display: none;
+        }
+
+        .button-4::-webkit-details-marker {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="map" style="height: 500px;"></div>
+<script>
+  function onEachFeature(feature, layer) {
+    // does this feature have a property named popupContent?
+    if (feature.properties && feature.properties.popupContent) {
+      layer.bindPopup(feature.properties.popupContent);
+    }
+  }
+
+  var geojsonFeature = [
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Вавилова улица, д.8, здание МБОУ Академического лицея</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=1' class='button-4'>1</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=2' class='button-4'>2</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=3' class='button-4'>3</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0472409, 56.4700018]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Фрунзе проспект, д.135, здание МАОУ СОШ № 34</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=4' class='button-4'>4</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=5' class='button-4'>5</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=6' class='button-4'>6</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0114620, 56.4734183]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>улица Салтыкова\u002DЩедрина, д.35, здание МБОУ ООШ №39 г. Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=7' class='button-4'>7</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0062686, 56.4770652]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Алтайская улица, д.159 стр.1, здание МБОУ ДО ДЮСШ №15</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=8' class='button-4'>8</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0057520, 56.4796850]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Алтайская улица, д.120/1, здание МАОУ СОШ №44 г.Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=9' class='button-4'>9</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=10' class='button-4'>10</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=11' class='button-4'>11</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=12' class='button-4'>12</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0063499, 56.4814623]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Лебедева улица, д.102, здание ОГБПОУ \u0022Томский базовый медицинский колледж\u0022</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=13' class='button-4'>13</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0015272, 56.4792267]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Лебедева улица, д.94, здание МАОУ СОШ № 23</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=14' class='button-4'>14</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=15' class='button-4'>15</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9982511, 56.4795551]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Челюскинцев улица, д.20А, здание МАОУ СОШ №15 им.Г.Е. Николаево</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=16' class='button-4'>16</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9917031, 56.4852675]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Сибирская улица, д.81В, здание ОГКОУ \u0022Школа\u002Dинтернат для обучающихся с нарушением зрения\u0022</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=17' class='button-4'>17</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=18' class='button-4'>18</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=19' class='button-4'>19</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9868240, 56.4814240]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Шевченко улица, д.41А, Департамент образования администрации Города Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=20' class='button-4'>20</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9912018, 56.4735409]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Шевченко, д.41А, Департамент образования администрации Города Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=21' class='button-4'>21</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=24' class='button-4'>24</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9912018, 56.4735409]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Кирова проспект, д.60, здание МБОУ ДО ДДИЮ \u0022Факел\u0022</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=22' class='button-4'>22</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9880495, 56.4632175]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Комсомольский проспект, д.64, здание общежития ТГПУ</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=23' class='button-4'>23</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9824140, 56.4685380]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Герцена улица, д.49, здание санатория\u002Dпрофилактория ТГПУ</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=25' class='button-4'>25</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9779356, 56.4731575]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Киевская улица, д.64, здание общежития ТГПУ</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=26' class='button-4'>26</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9761720, 56.4719571]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Тверская улица, д.74А, здание МАОУ СОШ № 41 г.Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=27' class='button-4'>27</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9737090, 56.4728190]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Никитина улица, д.26, здание МАОУ СОШ № 40</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=28' class='button-4'>28</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=29' class='button-4'>29</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=30' class='button-4'>30</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9726020, 56.4786940]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Никитина улица, д.6, здание МАОУ Школа \u0022Перспектива\u0022 г.Томск</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=31' class='button-4'>31</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9586142, 56.4779847]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Лебедева улица, д.6, здание МАОУ СОШ № 4</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=32' class='button-4'>32</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=33' class='button-4'>33</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=34' class='button-4'>34</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9723960, 56.4803855]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Юрточный переулок, д.8А, здание МАОУ СОШ № 12 г.Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=35' class='button-4'>35</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9566631, 56.4802195]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Герцена улица, д.47, здание учебного корпуса № 7 ТГПУ, г.Томск</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=36' class='button-4'>36</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9767414, 56.4731306]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Герцена улица, д.18 стр.5, здание ОГБПОУ \u0022Томский техникум информационных технологий\u0022 г.Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=37' class='button-4'>37</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9606290, 56.4724410]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Крылова улица, д.12А, здание Томского государственного педагогического колледжа</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=38' class='button-4'>38</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9550742, 56.4814957]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Алексея Беленца улица, д.11, здание ГБПОУ \u0022Томский индустриальный техникум\u0022</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=39' class='button-4'>39</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=40' class='button-4'>40</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9484608, 56.4812430]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>ул. 4\u002Dая Заречная, дом 37, кв. 16, жилой дом</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=211' class='button-4'>211</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0373763, 56.4902063]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Ленина проспект, д. 49А, здание общежития НИ ТГУ</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=41' class='button-4'>41</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9522295, 56.4682896]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Герцена улица, д. 7, здание МАОУ гимназия № 6</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=42' class='button-4'>42</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=96' class='button-4'>96</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9560384, 56.4712380]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Ленина проспект, д. 53, здание МАОУ Гуманитарный лицей</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=43' class='button-4'>43</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9514064, 56.4694991]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Вершинина улица, д. 46, здание общежития НИ ТПУ</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=44' class='button-4'>44</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9634169, 56.4605780]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Пирогова улица, д. 2, здание МАОУ средней общеобразовательной школы № 32</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=45' class='button-4'>45</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=46' class='button-4'>46</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=47' class='button-4'>47</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9523441, 56.4617062]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Аркадия Иванова улица, д. 4, здание учебного корпуса НИ ТПУ</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=48' class='button-4'>48</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9474060, 56.4619440]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Аркадия Иванова улица, д. 49, здание учебного корпуса НИ ТГУ</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=49' class='button-4'>49</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9354770, 56.4637690]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Учебная улица, д. 37, здание ОГБУДПО \u0022Учебно\u002Dметодический центр\u0022</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=50' class='button-4'>50</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9575495, 56.4587024]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Нахимова улица, д. 30, здание МАОУ лицей № 1 им. А.С. Пушкина</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=51' class='button-4'>51</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=52' class='button-4'>52</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=56' class='button-4'>56</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9688719, 56.4557966]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Максима Горького улица, д. 55, здание МАОУ средней общеобразовательной школы № 12</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=53' class='button-4'>53</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9411917, 56.4725818]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Учебная улица, д. 39, биологический корпус СибГМУ</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=54' class='button-4'>54</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9649560, 56.4583309]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>село Тимирязевское, Путевая улица, д. 1Д, здание администрации Кировского района Города Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=55' class='button-4'>55</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.8756231, 56.4929309]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Фёдора Лыткина улица, д. 12, здание общежития НИ ТГУ</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=57' class='button-4'>57</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9722334, 56.4525849]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Фёдора Лыткина улица, д. 14, здание общежития НИ ТГУ</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=58' class='button-4'>58</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9723396, 56.4514882]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>19\u002Dй Гвардейской дивизии улица, д. 9А, здание общежития ТУСУР</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=59' class='button-4'>59</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9770155, 56.4514422]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Басандайская улица, д. 11/1, здание санаторно\u002Dлесной школы г.Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=60' class='button-4'>60</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9801123, 56.4131302]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Белинского улица, д. 53А, здание библиотеки НИ ТПУ</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=61' class='button-4'>61</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=62' class='button-4'>62</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9574290, 56.4630483]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>посёлок Нижний Склад, Сплавная улица, д. 56, здание МБОУ основной общеобразовательной школы № 66</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=63' class='button-4'>63</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0727030, 56.3887210]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>село Тимирязевское, Водозаборная улица, д. 1, здание станции подземного водозабора Томского водоканала</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=64' class='button-4'>64</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.8488742, 56.5002078]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>село Тимирязевское, Школьная улица, д. 18, здание МАОУ средней общеобразовательной школы № 64</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=65' class='button-4'>65</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=66' class='button-4'>66</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.8919201, 56.4906405]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>село Дзержинское, Фабричная улица, д. 11, здание МАОУ средней общеобразовательной школы № 65</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=67' class='button-4'>67</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.8478742, 56.5176526]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>деревня Эушта, Школьная улица, д. 3, здание МАОУ средней общеобразовательной школы № 66</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=68' class='button-4'>68</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.8908183, 56.5273798]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Елизаровых улица, д. 47, здание МАОУ средней общеобразовательной школы № 42</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=69' class='button-4'>69</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=70' class='button-4'>70</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9926864, 56.4628375]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Богдана Хмельницкого улица, д. 40, здание МАОУ средней общеобразовательной школы № 35</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=71' class='button-4'>71</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=72' class='button-4'>72</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=93' class='button-4'>93</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=95' class='button-4'>95</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0059804, 56.4568812]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>посёлок Апрель, Есенина улица, д. 2, здание амбулатории ОГАУЗ \u0022Больница №2\u0022</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=74' class='button-4'>74</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0727030, 56.3887210]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Киевская улица, д. 111, здание МАОУ гимназия № 18</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=73' class='button-4'>73</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=75' class='button-4'>75</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=83' class='button-4'>83</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=84' class='button-4'>84</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9745057, 56.4613812]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Усова улица, д. 68, здание МАОУ средней общеобразовательной школы № 50</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=76' class='button-4'>76</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=79' class='button-4'>79</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=80' class='button-4'>80</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9855938, 56.4615212]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Мокрушина улица, д. 22, здание детско\u002Dюношеского центра \u0022Синяя птица\u0022</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=77' class='button-4'>77</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9908395, 56.4506021]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Мокрушина улица, д. 10, здание МАОУ средней общеобразовательной школы № 49</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=78' class='button-4'>78</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=212' class='button-4'>212</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9851543, 56.4515533]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Косарева улица, д. 9, здание детско\u002Dюношеского центра \u0022Звёздочка\u0022</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=81' class='button-4'>81</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9834329, 56.4616517]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Елизаровых улица, д. 2, здание детско\u002Dюношеского центра \u0022Звездочка\u0022</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=82' class='button-4'>82</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9765559, 56.4567389]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Усова улица, д. 56, здание МАОУ \u0022Сибирский лицей\u0022</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=85' class='button-4'>85</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9720595, 56.4641130]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Карташова улица, д. 47, здание МАОУ лицей № 51</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=86' class='button-4'>86</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=87' class='button-4'>87</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9789757, 56.4683996]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Кирова проспект, д. 56А, здание общежития ТУСУРа</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=88' class='button-4'>88</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9774263, 56.4667318]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Вершинина улица, д. 17, здание Томского городского Дворца творчества детей и молодежи</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=89' class='button-4'>89</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=90' class='button-4'>90</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9622690, 56.4687364]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>деревня Лоскутово, Ленина улица, д. 27А, здание МАОУ средней общеобразовательной школы № 33</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=91' class='button-4'>91</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=92' class='button-4'>92</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.1073484, 56.3709276]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Вершинина улица, д. 48, здание общежития НИ ТПУ</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=94' class='button-4'>94</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9633408, 56.4597200]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Партизанская улица, д. 16, здание Спорткомплекса ТГАСУ</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=97' class='button-4'>97</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9790552, 56.4974999]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Мичурина улица, д. 4, здание Томского промышленно\u002Dгуманитарного колледжа</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=98' class='button-4'>98</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=101' class='button-4'>101</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=137' class='button-4'>137</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0080335, 56.5048767]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Иркутский тракт, д. 15, здание Томской автомобильной школы ДОСААФ</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=100' class='button-4'>100</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0059583, 56.5016295]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Переездный пер., д. 3, здание общежития ТТЖТ\u002Dфилиала СГУПС</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=102' class='button-4'>102</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9968816, 56.5017397]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Спутник пос., д. 18, здание общежития</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=103' class='button-4'>103</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9840819, 56.5702248]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Томск\u002DСеверный МПС улица, д. 8/1, здание школы №37</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=104' class='button-4'>104</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0588628, 56.5417606]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Пушкина улица, д. 54/1, здание школы №47</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=105' class='button-4'>105</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=106' class='button-4'>106</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9927469, 56.5025606]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Иркутский тракт, д. 51/3, здание школы №67</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=107' class='button-4'>107</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=108' class='button-4'>108</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=109' class='button-4'>109</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0189474, 56.5030072]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Иркутский тракт, д. 86/1, здание Дома культуры \u0022Маяк\u0022</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=110' class='button-4'>110</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0257710, 56.5083866]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Суворова улица, д. 5, здание Томского колледжа гражданского транспорта</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=111' class='button-4'>111</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=112' class='button-4'>112</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0280340, 56.5105611]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>И.Черных улица, д. 97, здание Колледжа индустрии питания, торговли и сферы услуг</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=113' class='button-4'>113</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0313937, 56.5134369]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>И.Черных улица, д. 101, здание Колледжа индустрии питания, торговли и сферы услуг</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=114' class='button-4'>114</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0341305, 56.5140121]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Беринга улица, д. 4, здание гимназии №26</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=115' class='button-4'>115</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=116' class='button-4'>116</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=117' class='button-4'>117</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0359145, 56.5128394]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Иркутский тракт, д. 175, здание Томского экономико\u002Dпромышленного колледжа</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=118' class='button-4'>118</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=119' class='button-4'>119</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0661731, 56.5179104]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>И.Черных улица, д. 123/1, здание школы №38</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=120' class='button-4'>120</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=121' class='button-4'>121</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=122' class='button-4'>122</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0484685, 56.5170724]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>С.Лазо улица, д. 22, здание школы №37</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=123' class='button-4'>123</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=124' class='button-4'>124</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0375743, 56.5196129]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>С.Лазо улица, д. 26/1, здание гимназии №13</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=125' class='button-4'>125</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=126' class='button-4'>126</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=156' class='button-4'>156</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0409511, 56.5206133]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Новосибирская улица, д. 39, здание гимназии №29</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=127' class='button-4'>127</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=128' class='button-4'>128</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0181692, 56.5110867]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>С.Лазо улица, д. 14/2, здание школы №25</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=129' class='button-4'>129</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=130' class='button-4'>130</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=136' class='button-4'>136</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0297158, 56.5177306]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Ивановского улица, д. 8, здание НПО \u0022Вирион\u0022</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=131' class='button-4'>131</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0862680, 56.5056590]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Д. Бедного улица, д. 4, здание школы №46</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=132' class='button-4'>132</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0762551, 56.4955979]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Центральная улица, д. 4А, здание школы №19</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=133' class='button-4'>133</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=134' class='button-4'>134</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=135' class='button-4'>135</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0321980, 56.5272170]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>пос. Светлый, \u002D, д. 33, здание школы №22</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=138' class='button-4'>138</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=150' class='button-4'>150</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=151' class='button-4'>151</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.1024052, 56.5809718]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Новосибирская улица, д. 38, здание школы №43</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=139' class='button-4'>139</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=158' class='button-4'>158</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0203349, 56.5128518]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Дизайнеров улица, д. 4, здание Академического лицея г. Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=99' class='button-4'>99</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=140' class='button-4'>140</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0655533, 56.4994126]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Б.Куна улица, д. 20, здание Дворца народного творчества \u0022Авангард\u0022</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=141' class='button-4'>141</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=143' class='button-4'>143</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0480578, 56.5198064]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>И.Черных улица, д. 96, здание ОКБ</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=142' class='button-4'>142</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0589614, 56.5229867]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Пушкина улица, д. 48, здание ФКУ СИЗО\u002D1</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=144' class='button-4'>144</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9783995, 56.5014801]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Северный городок улица, д. 61/1, здание МБУ ДО СДЮСШОР №6 им. В.И. Расторгуева</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=145' class='button-4'>145</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9943700, 56.4969600]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Бирюкова улица, д. 22, здание школы №58</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=146' class='button-4'>146</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=153' class='button-4'>153</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=154' class='button-4'>154</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=155' class='button-4'>155</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=165' class='button-4'>165</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=166' class='button-4'>166</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0377922, 56.5028173]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Иркутский тракт, д. 122/1, здание школы №36</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=147' class='button-4'>147</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=148' class='button-4'>148</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0422358, 56.5144292]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Иркутский тракт, д. 181, здание Томского аграрного колледжа</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=149' class='button-4'>149</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0711337, 56.5194204]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Петра Федоровского улица, д. 4, здание школы \u0022Эврика\u002Dразвитие\u0022</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=152' class='button-4'>152</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=167' class='button-4'>167</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0536050, 56.4955980]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Пушкина улица, д. 29, здание общежития ТГАСУ</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=157' class='button-4'>157</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9766370, 56.4999310]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Белозерская улица, д. 12/1, здание гимназии №24</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=159' class='button-4'>159</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=160' class='button-4'>160</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9636219, 56.4988031]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Ачинская улица, д. 22, здание школы №31</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=161' class='button-4'>161</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=162' class='button-4'>162</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9692257, 56.4943806]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Октябрьская улица, д. 25, здание школы №5</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=163' class='button-4'>163</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9608201, 56.4923115]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Партизанская улица, д. 17, здание общежития ТГАСУ</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=164' class='button-4'>164</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9773108, 56.4967843]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Ференца Мюнниха улица, д. 12/1, здание МАОУ гимназии №55 г. Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=168' class='button-4'>168</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=169' class='button-4'>169</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=187' class='button-4'>187</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9891529, 56.5186655]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Интернационалистов улица, д. 11, здание МАОУ средней общеобразовательной школы №30 г. Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=170' class='button-4'>170</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=171' class='button-4'>171</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9875537, 56.5162604]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Интернационалистов улица, д. 12, здание МАОУ лицея №7</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=172' class='button-4'>172</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=173' class='button-4'>173</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=179' class='button-4'>179</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9836100, 56.5143070]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>79\u002Dой Гвардейской дивизии улица, д. 21, здание ОГБПОУ \u0022Томский коммунально\u002Dстроительный техникум\u0022</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=174' class='button-4'>174</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9780721, 56.5118875]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Карла Ильмера улица, д. 11, здание МАОУ средней общеобразовательной школы №14 им. А.Ф.Лебедева г. Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=175' class='button-4'>175</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=176' class='button-4'>176</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=180' class='button-4'>180</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9760594, 56.5077752]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Карла Ильмера улица, д. 4, здание ОГБПОУ \u0022Томский механико\u002Dтехнологический техникум\u0022</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=177' class='button-4'>177</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9730334, 56.5059846]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Карла Ильмера улица, д. 15/1, здание ФГБОУ ВО ТГПУ учебный корпус №8</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=178' class='button-4'>178</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9736951, 56.5084601]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Смирнова улица, д. 28, здание МАОУ гимназии №56 г. Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=181' class='button-4'>181</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=183' class='button-4'>183</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=185' class='button-4'>185</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9908853, 56.5225239]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Смирнова улица, д. 44, здание ОГБПОУ \u0022Томский политехнический техникум\u0022</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=182' class='button-4'>182</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9818875, 56.5270951]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Смирнова улица, д. 48А, здание ОГБПОУ \u0022Томский коммунально\u002Dстроительный техникум\u0022, корпус №2</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=184' class='button-4'>184</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9786259, 56.5280768]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>79\u002Dой Гвардейской дивизии улица, д. 25, здание ФГБОУ ВО ТГАСУ, учебный корпус №10</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=186' class='button-4'>186</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9755523, 56.5121954]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>5\u002Dой Армии улица, д. 24, здание МАОУ основной общеобразовательной школы №27 им. Г.Н.Ворошилова г. Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=188' class='button-4'>188</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=189' class='button-4'>189</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=208' class='button-4'>208</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9476108, 56.5256030]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Ферганская улица, д. 25, здание МАОУ средней общеобразовательной школы №54 г. Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=190' class='button-4'>190</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=192' class='button-4'>192</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=193' class='button-4'>193</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9656930, 56.5163436]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Первомайская улица, д. 65/1, здание МБОУ ДО ДДТ \u0022Искорка\u0022 г. Томска (структурное подразделение центра досуга \u0022Доминанта\u0022)</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=191' class='button-4'>191</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9968816, 56.5017397]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Береговая улица, д. 6, здание МАОУ Заозерная средняя общеобразовательная школа с углубленным изучением отдельных предметов № 16 г. Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=194' class='button-4'>194</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=570' class='button-4'>570</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0359145, 56.5128394]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Ленина проспект, д. 245, здание МАОУ средней общеобразовательной школы №28 г. Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=195' class='button-4'>195</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9387047, 56.5196621]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Войкова улица, д. 86, здание ОГБПОУ \u0022Томский техникум социальных технологий\u0022</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=196' class='button-4'>196</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9350148, 56.5088412]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Розы Люксембург улица, д. 64, здание МАОУ средней общеобразовательной школы №2 г. Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=197' class='button-4'>197</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=202' class='button-4'>202</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9506884, 56.5007448]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Ленина проспект, д. 207, здание МАОУ ДОД ДЮСША УСЦ ВВС им. В.А.Шевелева</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=198' class='button-4'>198</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9489214, 56.5076133]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Сухоозерный переулок, д. 6, здание МАОУ Заозерной средней общеобразовательной школы с углубленным изучением отдельных предметов №16 г. Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=199' class='button-4'>199</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=200' class='button-4'>200</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=203' class='button-4'>203</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.0280340, 56.5105611]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Ленина проспект, д. 181, здание ОГБПОУ \u0022Томский техникум водного транспорта и судоходства\u0022</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=201' class='button-4'>201</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9489336, 56.5020265]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Карла Маркса улица, д. 50, здание МОАУ ДОД \u0022СДЮСШ олимпийского резерва г.Томска\u0022</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=204' class='button-4'>204</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9456793, 56.5006242]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Кутузова улица, д. 7А, здание МАОУ гимназии № 56 г. Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=205' class='button-4'>205</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9782508, 56.5406247]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Кольцевой проезд, д. 39, здание МАОУ средней общеобразовательной школы №11 им. В.И.Смирнова г. Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=206' class='button-4'>206</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9779796, 56.5317309]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Смирнова улица, д. 50, здание МБОУ общеобразовательной школы\u002Dинтерната №1 основного общего образования г. Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=207' class='button-4'>207</a>&nbsp;<a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=210' class='button-4'>210</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9761116, 56.5287859]
+      }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "popupContent": "" +
+            "<div>Карла Маркса улица, д. 21, здание МАОУ Мариинской средней общеобразовательной школы №3 г. Томска</div>" +
+            "<div>Записаться:</div>" +
+            "<div><a href='https://docs.google.com/forms/d/e/1FAIpQLScCo7Q3p1eGgsuaHynN-RPGbpfWPiuMA2WqCvEy-LAcYwgWQQ/viewform?usp=pp_url&entry.2011454265=209' class='button-4'>209</a>&nbsp;</div>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [84.9462849, 56.4922923]
+      }
+    },
+
+  ];
+  var map = L.map('map').setView([56.4759, 84.97755], 10);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map);
+  L.geoJSON(geojsonFeature, {
+    onEachFeature: onEachFeature
+  }).addTo(map);
+</script>
+</body>
+</html>
